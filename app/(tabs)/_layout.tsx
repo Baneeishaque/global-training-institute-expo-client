@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, StyleSheet, Image, Text, TextInput } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Login() {
 
@@ -37,11 +38,17 @@ export default function Login() {
             secureTextEntry
           />
           <View style={styles.textLinks}>
-            <Text style={styles.subText}>create account</Text>
-            <Text style={styles.subText}>forget password?</Text>
+            <TouchableOpacity>
+              {/* <Text style={styles.subText}>create account</Text> */}
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.subText}>forget password?</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.loginCaption2}>
-            <Text style={styles.loginText2}>Login</Text>
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.loginText2}>Login</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
