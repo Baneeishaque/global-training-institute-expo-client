@@ -1,60 +1,74 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { View, StyleSheet, Image, Text, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Login() {
+export default function Login(): ReactElement {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  let storedUser: string | null = null;
+  (async function fetchStoredUser(): Promise<void> {
+    storedUser = await AsyncStorage.getItem('user');
+  })();
 
-  return (
-    <View style={{ flex: 1, justifyContent: "center" }} >
-      <View style={styles.container}>
-        <View style={styles.bannerImgContainer}>
-          <Image
-            source={require('../../assets/images/logo.png')}
-            style={styles.bannerImg}
-            resizeMode="contain"
-            alt="Global training logo"
-          />
-        </View>
-        <Text style={styles.logoCaption}>Matching Trainers To Classes</Text>
-        <View style={styles.loginCaption}>
-          <Text style={styles.loginText}>Login</Text>
-          <Text style={styles.loginsubText}>login to continue using the app</Text>
-        </View>
-        <View style={styles.loginCard}>
-          <TextInput
-            style={styles.loginInput}
-            value={username}
-            onChangeText={setUsername}
-            placeholder="Username"
-          />
-          <TextInput
-            style={[styles.loginInput, styles.mt5]}
-            value={password}
-            onChangeText={setPassword}
-            placeholder="Password"
-            secureTextEntry
-          />
-          <View style={styles.textLinks}>
-            <TouchableOpacity>
-              {/* <Text style={styles.subText}>create account</Text> */}
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.subText}>forget password?</Text>
-            </TouchableOpacity>
+  if (storedUser === null) {
+
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    return (
+      <View style={{ flex: 1, justifyContent: "center" }} >
+        <View style={styles.container}>
+          <View style={styles.bannerImgContainer}>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={styles.bannerImg}
+              resizeMode="contain"
+              alt="Global training logo"
+            />
           </View>
-          <View style={styles.loginCaption2}>
-            <TouchableOpacity style={styles.loginButton}>
-              <Text style={styles.loginText2}>Login</Text>
-            </TouchableOpacity>
+          <Text style={styles.logoCaption}>Matching Trainers To Classes</Text>
+          <View style={styles.loginCaption}>
+            <Text style={styles.loginText}>Login</Text>
+            <Text style={styles.loginsubText}>login to continue using the app</Text>
+          </View>
+          <View style={styles.loginCard}>
+            <TextInput
+              style={styles.loginInput}
+              value={username}
+              onChangeText={setUsername}
+              placeholder="Username"
+            />
+            <TextInput
+              style={[styles.loginInput, styles.mt5]}
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Password"
+              secureTextEntry
+            />
+            <View style={styles.textLinks}>
+              <TouchableOpacity>
+                {/* <Text style={styles.subText}>create account</Text> */}
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={styles.subText}>forget password?</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.loginCaption2}>
+              <TouchableOpacity style={styles.loginButton}>
+                <Text style={styles.loginText2}>Login</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  }
+  else {
+    return <View></View>
+  }
 }
+
+// TODO : Type Declare for variable
 const styles = StyleSheet.create({
   container: {
     paddingTop: 80,
