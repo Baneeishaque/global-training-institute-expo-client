@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function Login(): ReactElement {
 
   let storedUser: string | null = null;
-  (async function fetchStoredUser(): Promise<void> {
+  (async (): Promise<void> => {
     storedUser = await AsyncStorage.getItem('user');
   })();
 
