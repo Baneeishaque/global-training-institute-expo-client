@@ -3,12 +3,14 @@ import { View, StyleSheet, Image, Text, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+let storedUser: string | null = await AsyncStorage.getItem('user');
+
 export default function Login(): ReactElement {
 
-  let storedUser: string | null = null;
-  (async (): Promise<void> => {
-    storedUser = await AsyncStorage.getItem('user');
-  })();
+  // let storedUser: string | null = null;
+  // (async (): Promise<void> => {
+  //   storedUser = await AsyncStorage.getItem('user');
+  // })();
 
   if (storedUser === null) {
 
